@@ -1,36 +1,45 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
-
-    public float speed = 10f;
-    public Rigidbody2D rb;
-    Vector2 lastClickedPos;
-
-    bool moving;
-
-    private void Update()
+    // [SerializeField] private UI_Inventory uiInventory;
+    private Inventory inventory;
+    private void Awake()
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            lastClickedPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            moving = true;
-        }
-        if (moving && (Vector2)transform.position != lastClickedPos)
-        {
-            float step = speed * Time.deltaTime;
-            transform.position = Vector2.MoveTowards(transform.position, lastClickedPos, step);
+        inventory = new Inventory();
+//        uiInventory.SetInventory(inventory);
+    }
 
-        }
-        else
+    public float speed = 10.5f;
+
+    void Update()
+    {
+        Vector3 pos = transform.position;
+
+        if (Input.GetKey("w"))
         {
-            moving = false;
+            pos.y += speed * Time.deltaTime;
         }
+        if (Input.GetKey("s"))
+        {
+            pos.y -= speed * Time.deltaTime;
+        }
+        if (Input.GetKey("d"))
+        {
+            pos.x += speed * Time.deltaTime;
+        }
+        if (Input.GetKey("a"))
+        {
+            pos.x -= speed * Time.deltaTime;
+        }
+
+        transform.position = pos;
+
+
 
     }
 
+        
 }
